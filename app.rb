@@ -8,7 +8,7 @@ module SituationRoom
   class Monitor < Sinatra::Base
 
     set :root, File.dirname(__FILE__)
-    set :redis_url, ENV['REDIS_URL'] || 'redis://localhost:6379'
+    set :redis_url, ENV['REDISCLOUD_URL'] || 'redis://localhost:6379'
 
     register Sinatra::AssetPack
 
