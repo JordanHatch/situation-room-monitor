@@ -25,6 +25,10 @@ module SituationRoom
     end
 
     post '/rooms/:room' do |room|
+      unless params[:api_key] && params[:api_key] == ENV['API_KEY']
+        halt 401
+      end
+
       redis_client.set(room, Time.now.to_s)
     end
 
