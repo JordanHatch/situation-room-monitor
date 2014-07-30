@@ -14,13 +14,13 @@
         url: '/rooms',
         dataType: 'json',
       }).done(roomStatus.updateRoomStatus);
+      roomStatus.scheduleNextRequest();
     },
     updateRoomStatus: function(data) {
+      $('li:not(.template)').remove();
       $.each(data, roomStatus.insertRoomItem);
     },
     insertRoomItem: function(room, timestamp) {
-      window.console.dir(room, timestamp);
-
       var item = roomStatus.$template().clone();
       item.removeClass('template');
       item.find('h2').text(room);
@@ -45,6 +45,9 @@
     statusText: function(timestamp) {
       var lastUpdatedAt = moment(timestamp)
       return lastUpdatedAt.fromNow();
+    },
+    scheduleNextRequest: function(){
+      setTimeout(roomStatus.requestRoomStatus, 10000);
     },
     init: function() {
       roomStatus.requestRoomStatus();
