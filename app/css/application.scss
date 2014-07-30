@@ -14,13 +14,20 @@ body {
 
 header {
   background: #fff;
+  color: #000;
   padding: 20px;
+  position: relative;
 
   h1 {
-    color: #000;
     font-weight: normal;
     margin: 0;
     padding: 0;
+  }
+  .time {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 18px;
   }
 }
 

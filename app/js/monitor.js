@@ -19,6 +19,7 @@
     updateRoomStatus: function(data) {
       $('li:not(.template)').remove();
       $.each(data, roomStatus.insertRoomItem);
+      roomStatus.setLastUpdatedTime();
     },
     insertRoomItem: function(room, timestamp) {
       var item = roomStatus.$template().clone();
@@ -48,6 +49,10 @@
     },
     scheduleNextRequest: function(){
       setTimeout(roomStatus.requestRoomStatus, 10000);
+    },
+    setLastUpdatedTime: function(){
+      var lastUpdatedString = "updated: " + moment().format('HH:mm:ss');
+      $('header .time').text(lastUpdatedString);
     },
     init: function() {
       roomStatus.requestRoomStatus();
