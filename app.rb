@@ -17,8 +17,10 @@ module SituationRoom
     end
 
     get '/rooms' do
-      keys = redis_client.keys('*')
-      values = redis_client.mget(keys)
+      client = build_redis_client
+      keys = client.keys('*')
+      values = client.mget(keys)
+      client.quit
 
       tuples = keys.zip(values)
       Hash[tuples].to_json
@@ -29,7 +31,9 @@ module SituationRoom
         halt 401
       end
 
-      redis_client.set(room, Time.now.to_s)
+      client = build_redis_client
+      client.set(room, Time.now.to_s)
+      client.quit
     end
 
     assets {
@@ -48,8 +52,8 @@ module SituationRoom
     }
 
   private
-    def redis_client
-      @redis_client ||= Redis.new(url: settings.redis_url)
+    def build_redis_client
+      Redis.new(url: settings.redis_url)
     end
 
   end
